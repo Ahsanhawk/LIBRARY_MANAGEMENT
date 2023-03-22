@@ -8,6 +8,9 @@ const fine_info = require("../models/fine_info")
 const Student = require("../models/Student.model")
 const Teacher = require("../models/Teacher.model")
 const Admin = require("../models/Admin.model")
+const Borrowing = require("../models/Borrowing.model")
+const Categories = require("../models/Categories.model")
+const Language = require("../models/Language.model")
 
 
 
@@ -139,6 +142,66 @@ const addAdmin =(req, res) => {
   })
  };
 
+const addBorrowing =(req, res) => {
+ sequelize.sync().then(() => {
+    console.log('Student table created successfully!');
+    Borrowing.create({
+        //  username: req.query.username, password: req.query.password 
+        Name:req.query.Name,
+        Reference_No:req.query.Reference_No,
+        Author_Name:req.query.Author_Name,
+        Issue_date:req.query.Issue_date,
+        release_date:req.query.release_date
+        })
+        .then((result) => {
+          res.json(result);
+        })
+        .catch((error) => {
+          res.status(500).send({ message: error.message || "some error occured" });
+        });
+      console.log(req.result);
+ })
+};
+
+const addCategories =(req, res) => {
+  sequelize.sync().then(() => {
+     console.log('Student table created successfully!');
+     Categories.create({
+         //  username: req.query.username, password: req.query.password 
+         Name:req.query.First,
+         Author_Name:req.query.Author_Name,
+         Reference_No:req.query.Reference_No,
+         })
+         .then((result) => {
+           res.json(result);
+         })
+         .catch((error) => {
+           res.status(500).send({ message: error.message || "some error occured" });
+         });
+       console.log(req.result);
+  })
+ };
+
+
+const addLanguage =(req, res) => {
+  sequelize.sync().then(() => {
+     console.log('Student table created successfully!');
+     Language.create({
+         //  username: req.query.username, password: req.query.password 
+         Book_Name:req.query.Book_Name,
+         Reference_No:req.query.Reference_No,
+         Author_Name:req.query.Author_Name,
+         Language_:req.query.Language_
+     })
+         .then((result) => {
+           res.json(result);
+         })
+         .catch((error) => {
+           res.status(500).send({ message: error.message || "some error occured" });
+         });
+       console.log(req.result);
+  })
+ };
 
 
 // //////--------------------------delete--------------------
@@ -255,7 +318,110 @@ const deleteAdmin = (req , res) =>
 
 
 
+ const deleteBorrowing = (req , res) =>
+ {sequelize.sync().then(() =>  {
+    console.log(req.query.id);
+    Borrowing.destroy({
+      where: {
+        id: parseInt(req.query.id),
+      },
+    })
+      .then((result) => {
+        res.send("Delete").status(200);
+      })
+      .catch((error) => {
+        console.log("Not Delete");
+      });
+  })
+};
+
+
+
+const deleteCategories = (req , res) =>
+{sequelize.sync().then(() =>  {
+   console.log(req.query.id);
+   Categories.destroy({
+     where: {
+       id: parseInt(req.query.id),
+     },
+   })
+     .then((result) => {
+       res.send("Delete").status(200);
+     })
+     .catch((error) => {
+       console.log("Not Delete");
+     });
+ })
+};
+
+
+const deleteLanguage = (req , res) =>
+{sequelize.sync().then(() =>  {
+   console.log(req.query.id);
+   Language.destroy({
+     where: {
+       id: parseInt(req.query.id),
+     },
+   })
+     .then((result) => {
+       res.send("Delete").status(200);
+     })
+     .catch((error) => {
+       console.log("Not Delete");
+     });
+ })
+};
+
+
+
 // /////////----------------------UPDATE------------------
+
+const updateBorrowing = (req , res) =>{
+  Borrowing.update(
+    {
+        Reference_No: 1112434,
+    },
+    {
+        where:{ id : 1},
+    }
+).then(() =>{
+     console.log(" upadted data ")
+     res.send("updated")
+})
+
+};
+
+
+const updateCategories = (req , res) =>{
+  Categories.update(
+    {
+        Name: xyz,
+    },
+    {
+        where:{ id : 1},
+    }
+).then(() =>{
+     console.log(" upadted data ")
+     res.send("updated")
+})
+
+};
+
+const updateLanguage = (req , res) =>{
+  Language.update(
+    {
+        Book_Name: web_development,
+    },
+    {
+        where:{ id : 1},
+    }
+).then(() =>{
+     console.log(" upadted data ")
+     res.send("updated")
+})
+
+};
+
 
 const updateStudent = (req , res) =>{
   Student.update(
@@ -445,7 +611,54 @@ sequelize.sync().then(() =>{
 })
 };
 
- 
+
+const retriveBorrowing = (req , res) =>
+{
+sequelize.sync().then(() =>{
+  try{
+    Borrowing.findAll().then((result)=>{
+      res.json(result)
+    })
+  }
+  catch(error){
+    console.log(error);
+  }
+})
+};
+
+
+
+
+const retriveCategories = (req , res) =>
+{
+sequelize.sync().then(() =>{
+  try{
+    Categories.findAll().then((result)=>{
+      res.json(result)
+    })
+  }
+  catch(error){
+    console.log(error);
+  }
+})
+};
+
+
+const retriveLanguage = (req , res) =>
+{
+sequelize.sync().then(() =>{
+  try{
+    Language.findAll().then((result)=>{
+      res.json(result)
+    })
+  }
+  catch(error){
+    console.log(error);
+  }
+})
+};
+
+
 
 
 module.exports={addBooks , issued_details , Fine_details,
@@ -454,5 +667,8 @@ deleteBook , deleteIssue_details , delete_fine_details,
  Retrive_Books , Retrive_Books_Fine , Retrive_issue_book,
  addStudent , addTeacher , addAdmin, deleteStudent , deleteTacher , deleteAdmin,
  updateStudent , updateTeacher , updateAdmin,
- retriveStudent , retriveTeacher , retriveAdmin
+ retriveStudent , retriveTeacher , retriveAdmin,addBorrowing , addCategories , addLanguage,
+deleteBorrowing , deleteCategories , deleteLanguage,
+ updateBorrowing , updateCategories , updateLanguage,
+ retriveBorrowing , retriveCategories , retriveLanguage
  }
