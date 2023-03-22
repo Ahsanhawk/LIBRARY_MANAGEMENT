@@ -16,7 +16,17 @@ router.get('/retrive_issue_book' , fuction.Retrive_issue_book)
 router.put('/updates_book', fuction.updateBooks)
 router.put('/update_fine_details', fuction.update_fine_details)
 router.put('/update_issued_details', fuction.update_issue_books)
-
-
+router.post('/addstudent' , fuction.addStudent)
+router.post('/addteacher' , fuction.addTeacher)
+router.post('/addadmin' , fuction.addAdmin)
+router.delete('/deletestudent' , fuction.deleteStudent)
+router.delete('/deleteteacher' , fuction.deleteTacher)
+router.delete('/deleteadmin' , fuction.deleteAdmin)
+router.get('/retrivestudent' , fuction.retriveStudent)
+router.get('/retriveteacher' , fuction.retriveTeacher)
+router.get('/retriveadmin' , fuction.retriveAdmin)
+router.put('/updatestudent', fuction.updateStudent)
+router.put('/updateteacher', fuction.updateTeacher)
+router.put('/updateadmin', fuction.updateAdmin)
 
 module.exports = router
